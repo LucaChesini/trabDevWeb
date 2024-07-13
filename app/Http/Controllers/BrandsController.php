@@ -8,11 +8,22 @@ use Illuminate\Support\Facades\Validator;
 
 class BrandsController extends Controller
 {
-    public function show()
+    public function index()
     {
         $brands = Brand::all();
 
-        return response()->json(['brands' => $brands]);
+        return view('brands.list', [
+            'brands' => $brands
+        ]);
+    }
+
+    public function create()
+    {
+        $brand = new Brand();
+
+        return view('brands.form', [
+            'brand' => $brand
+        ]);
     }
 
     public function store(Request $request)
@@ -38,7 +49,15 @@ class BrandsController extends Controller
 
         $brand->save();
 
-        return response()->json(['brand' => $brand]);
+        return redirect()->route('brands.index');
+    }
+
+    public function edit($id)
+    {
+        $brand = Brand::find($id);
+        return view('brands.form', [
+            'brand' => $brand
+        ]);
     }
 
     public function update($id, Request $request)
@@ -64,7 +83,7 @@ class BrandsController extends Controller
 
         $brand->save();
 
-        return response()->json(['brand' => $brand]);
+        return redirect()->route('brands.index');
     }
 
     public function destroy($id)
@@ -72,6 +91,6 @@ class BrandsController extends Controller
         $brand = Brand::find($id);
         $brand->delete();
 
-        return response()->json(['brand' => $brand]);
+        return redirect()->route('brands.index');
     }
 }

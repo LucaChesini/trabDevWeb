@@ -12,27 +12,32 @@ class CategoriesController extends Controller
     {
         $categories = Category::all();
 
-        return view("categories.list", [
+        return view('categories.list', [
             'categories' => $categories
+        ]);
+    }
+
+    public function create()
+    {
+        $category = new Category();
+
+        return view('categories.form', [
+            'category' => $category
         ]);
     }
 
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            "name" => "required",
-            "description" => "required"
+            'name' => 'required',
+            'description' => 'required'
         ],[
-            "name.required" => "O campo de nome deve ser preenchido",
-            "description.required" => "O campo de descrição deve ser preenchido"
+            'name.required' => 'O campo de nome deve ser preenchido',
+            'description.required' => 'O campo de descrição deve ser preenchido'
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'message' => 'Erro na validação dos campos',
-                'erros' => $validator->errors()
-            ]);
-            // return back()->withErrors($validator)->withInput();
+            return back()->withErrors($validator)->withInput();
         }
 
         $category = new Category([
@@ -42,25 +47,29 @@ class CategoriesController extends Controller
 
         $category->save();
 
-        return response()->json(['category' => $category]);
+        return redirect()->route('categories.index');
+    }
+
+    public function edit($id)
+    {
+        $category = Category::find($id);
+        return view('categories.form', [
+            'category' => $category
+        ]);
     }
 
     public function update($id, Request $request)
     {
         $validator = Validator::make($request->all(), [
-            "name" => "required",
-            "description" => "required"
+            'name' => 'required',
+            'description' => 'required'
         ],[
-            "name.required" => "O campo de nome deve ser preenchido",
-            "description.required" => "O campo de descrição deve ser preenchido"
+            'name.required' => 'O campo de nome deve ser preenchido',
+            'description.required' => 'O campo de descrição deve ser preenchido'
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'message' => 'Erro na validação dos campos',
-                'erros' => $validator->errors()
-            ]);
-            // return back()->withErrors($validator)->withInput();
+            return back()->withErrors($validator)->withInput();
         }
 
         $category = Category::find($id);
@@ -70,7 +79,7 @@ class CategoriesController extends Controller
 
         $category->save();
 
-        return response()->json(['category' => $category]);
+        return redirect()->route('categories.index');
     }
 
     public function destroy($id)
@@ -78,6 +87,6 @@ class CategoriesController extends Controller
         $category = Category::find($id);
         $category->delete();
 
-        return response()->json(['category' => $category]);
+        return redirect()->route('categories.index');
     }
 }
