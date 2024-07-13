@@ -21,26 +21,26 @@ Route::get('/', function () {
 });
 
 Route::prefix('categories')->group(function() {
-    Route::get('', [CategoriesController::class, 'show']);
-    Route::post('', [CategoriesController::class, 'store']);
-    Route::put('{id}', [CategoriesController::class, 'update']);
-    Route::delete('{id}', [CategoriesController::class, 'destroy']);
+    Route::get('', [CategoriesController::class, 'index'])->name('categories.index');
+    Route::post('', [CategoriesController::class, 'store'])->name('categories.store');
+    Route::put('{id}', [CategoriesController::class, 'update'])->name('categories.update');
+    Route::delete('{id}', [CategoriesController::class, 'destroy'])->name('categories.destroy');
 });
 
 Route::prefix('brands')->group(function() {
-    Route::get('', [BrandsController::class, 'show']);
-    Route::post('', [BrandsController::class, 'store']);
-    Route::put('/{id}', [BrandsController::class, 'update']);
-    Route::delete('/{id}', [BrandsController::class, 'destroy']);
+    Route::get('', [BrandsController::class, 'show'])->name('brands.index');
+    Route::post('', [BrandsController::class, 'store'])->name('brands.store');
+    Route::put('/{id}', [BrandsController::class, 'update'])->name('brands.update');
+    Route::delete('/{id}', [BrandsController::class, 'destroy'])->name('brands.destroy');
 });
 
 
 Route::prefix('products')->group(function() {
-    Route::get('', [ProductsController::class, 'show']);
-    Route::post('', [ProductsController::class, 'store']);
-    Route::put('{id}', [ProductsController::class, 'update']);
-    Route::delete('{id}', [ProductsController::class, 'destroy']);
-    Route::put('{id}/adiciona-estoque', [ProductsController::class, 'adicionaEstoque']);
-    Route::put('{id}/remove-estoque', [ProductsController::class, 'removeEstoque']);
-    Route::put('{id}/balanceia-estoque', [ProductsController::class, 'balanceiaEstoque']);
+    Route::get('', [ProductsController::class, 'show'])->name('products.index');
+    Route::post('', [ProductsController::class, 'store'])->name('products.store');
+    Route::put('{id}', [ProductsController::class, 'update'])->name('products.update');
+    Route::delete('{id}', [ProductsController::class, 'destroy'])->name('products.destroy');
+    Route::put('{id}/adiciona-estoque', [ProductsController::class, 'adicionaEstoque'])->name('products.adiciona-estoque');
+    Route::put('{id}/remove-estoque', [ProductsController::class, 'removeEstoque'])->name('products.remove-estoque');
+    Route::put('{id}/balanceia-estoque', [ProductsController::class, 'balanceiaEstoque'])->name('products.balanceia-estoque');
 });
