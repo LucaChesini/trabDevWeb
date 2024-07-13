@@ -8,11 +8,13 @@ use Illuminate\Support\Facades\Validator;
 
 class CategoriesController extends Controller
 {
-    public function show()
+    public function index()
     {
         $categories = Category::all();
 
-        return response()->json(['categories' => $categories]);
+        return view("categories.list", [
+            'categories' => $categories
+        ]);
     }
 
     public function store(Request $request)
