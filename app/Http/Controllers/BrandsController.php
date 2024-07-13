@@ -29,9 +29,13 @@ class BrandsController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            "name" => "required"
+            "name" => "required",
+            'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ],[
-            "name.required" => "O campo de nome deve ser preenchido"
+            "name.required" => "O campo de nome deve ser preenchido",
+            'photo.mimes' => 'O arquivo deve ser uma imagem',
+            'photo.max' => 'O arquivo deve ser menor que 2MB',
+            'photo.image' => 'O arquivo deve ser uma imagem',
         ]);
 
         if ($validator->fails()) {
@@ -39,14 +43,16 @@ class BrandsController extends Controller
                 'message' => 'Erro na validação dos campos',
                 'erros' => $validator->errors()
             ]);
-            // return back()->withErrors($validator)->withInput();
         }
 
-        $brand = new Brand([
-            'name' => $request->name,
-            'photo' => $request->photo,
-        ]);
-
+        $brand = new Brand();
+        $brand->name = $request->name;
+    
+        if ($request->hasFile('photo')) {
+            $photoPath = $request->file('photo')->store('brand_photos', 'public');
+            $brand->photo = $photoPath;
+        }
+    
         $brand->save();
 
         return redirect()->route('brands.index');
@@ -63,9 +69,13 @@ class BrandsController extends Controller
     public function update($id, Request $request)
     {
         $validator = Validator::make($request->all(), [
-            "name" => "required"
+            "name" => "required",
+            'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ],[
-            "name.required" => "O campo de nome deve ser preenchido"
+            "name.required" => "O campo de nome deve ser preenchido",
+            'photo.mimes' => 'O arquivo deve ser uma imagem',
+            'photo.max' => 'O arquivo deve ser menor que 2MB',
+            'photo.image' => 'O arquivo deve ser uma imagem',
         ]);
 
         if ($validator->fails()) {
@@ -73,13 +83,16 @@ class BrandsController extends Controller
                 'message' => 'Erro na validação dos campos',
                 'erros' => $validator->errors()
             ]);
-            // return back()->withErrors($validator)->withInput();
         }
 
         $brand = Brand::find($id);
 
         $brand->name = $request->name;
-        $brand->photo = $request->photo;
+
+        if ($request->hasFile('photo')) {
+            $photoPath = $request->file('photo')->store('brand_photos', 'public');
+            $brand->photo = $photoPath;
+        }
 
         $brand->save();
 
