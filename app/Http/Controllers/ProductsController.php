@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Brand;
 use App\Models\Category;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class ProductsController extends Controller
 {
@@ -47,11 +48,11 @@ class ProductsController extends Controller
             'category_id.exists' => 'A categoria selecionada não existe no sistema',
         ]);
 
-        $path = $request->file('photo')->store('photos', 'public');
-
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
+
+        $path = $request->file('photo')->store('photos', 'public');
 
         $product = new Product([
             'name' => $request->name,
@@ -61,6 +62,7 @@ class ProductsController extends Controller
             'photo_mini' => $path,
             'brand_id' => $request->brand_id,
             'category_id' => $request->category_id,
+            'stock' => 0,
         ]);
 
         $product->save();
@@ -127,70 +129,44 @@ class ProductsController extends Controller
         return redirect()->route('products.index')->with('success', 'Produto excluído com sucesso.');
     }
 
-    public function adicionaEstoque($id, Request $request)
+    public function ajustaEstoque($id, Request $request)
     {
         $validator = Validator::make($request->all(), [
-            "stock" => "required"
-        ],[
-            "stock.required" => "O campo de estoque deve ser preenchido"
-        ]);
-
+            'stock' => 'required',
+            'operacao' => [
+                'required',
+                Rule::in(['adicionar', 'remover', 'balancear'])
+                ]
+            ],[
+                'stock.required' => 'O campo de estoque deve ser preenchido',
+                'operacao.required' => 'Uma operação deve ser selecionada',
+                'operacao.in' => 'Operacao inválida'
+            ]);
+            
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
         $product = Product::find($id);
 
-        $product->stock += $request->stock;
-
-        $product->save();
-
-        return response()->json(['product' => $product]);
-    }
-
-    public function removeEstoque($id, Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            "stock" => "required"
-        ],[
-            "stock.required" => "O campo de estoque deve ser preenchido"
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-
-        $product = Product::find($id);
-
-        if ($product->stock - $request->stock < 0) {
-            $product->stock = 0;
-        } else {
-            $product->stock -= $request->stock;
+        switch($request->operacao){
+            case 'adicionar':
+                $product->stock += $request->stock;
+                break;
+            case 'remover':
+                if ($product->stock - $request->stock < 0) {
+                    $product->stock = 0;
+                } else {
+                    $product->stock -= $request->stock;
+                }
+                break;
+            case 'balancear':
+                $product->stock = $request->stock;
+                break;
         }
 
         $product->save();
 
-        return response()->json(['product' => $product]);
-    }
-
-    public function balanceiaEstoque($id, Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            "stock" => "required"
-        ],[
-            "stock.required" => "O campo de estoque deve ser preenchido"
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-
-        $product = Product::find($id);
-
-        $product->stock = $request->stock;
-
-        $product->save();
-
-        return response()->json(['product' => $product]);
+        return redirect()->route('stock.index')->with('success', 'Estoque atualizado com sucesso.');
     }
 }
