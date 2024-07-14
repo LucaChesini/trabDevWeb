@@ -3,11 +3,11 @@
     Estoque
 @endsection
 @section('content')
-    <h1>Produtos em Estoque</h1>
+    <h1>Estoques de Produtos</h1>
     <div>
         <div class="container">
            
-            <table class="table">
+            <table class="table table-striped table-hover">
                 <thead>
                     <tr>
                         <th>ID</th>

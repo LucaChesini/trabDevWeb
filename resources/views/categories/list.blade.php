@@ -8,13 +8,18 @@
         <a href="{{route('categories.create')}}" >Adicionar Categorias</a>
     </div>
     <table class="table table-striped table-hover">
-        <tr>
-            <th>Nome</th>
-            <th>Descrição</th>
-            <th>Ações</th>
-        </tr>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
         @foreach ($categories as $category)
             <tr>
+                <td>{{$category->id}}</td>
                 <td>{{$category->name}}</td>
                 <td>{{$category->description}}</td>
                 <td>
@@ -29,5 +34,6 @@
                 </td>
             </tr>
         @endforeach
+        </tbody>
     </table>
 @endsection
