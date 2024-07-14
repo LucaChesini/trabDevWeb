@@ -20,7 +20,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Estoques <i class="fas fa-box-open"></i></h5>
                         <p class="card-text">Descubra nossos diversos tipos de estoques projetados para simplificar o gerenciamento de produtos essenciais e exclusivos, adaptados especificamente às suas necessidades comerciais e operacionais.</p>
-                        <a href="#" class="btn btn-primary">Explorar!</a>
+                        <a href="stock" class="btn btn-primary">Explorar!</a>
                     </div>
                 </div>
             </div>

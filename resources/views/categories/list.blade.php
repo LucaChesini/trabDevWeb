@@ -5,7 +5,7 @@
 @section('content')
     <h1>Categorias</h1>
     <div>
-        <a href="{{route('categories.create')}}">Adicionar Categorias</a>
+        <a href="{{route('categories.create')}}" >Adicionar Categorias</a>
     </div>
     <table class="table table-striped table-hover">
         <tr>

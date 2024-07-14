@@ -3,6 +3,7 @@
 use App\Http\Controllers\BrandsController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\StockController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,11 +41,16 @@ Route::prefix('brands')->group(function() {
 
 
 Route::prefix('products')->group(function() {
-    Route::get('', [ProductsController::class, 'show'])->name('products.index');
+    Route::get('', [ProductsController::class, 'index'])->name('products.index');
     Route::post('', [ProductsController::class, 'store'])->name('products.store');
     Route::put('{id}', [ProductsController::class, 'update'])->name('products.update');
     Route::delete('{id}', [ProductsController::class, 'destroy'])->name('products.destroy');
-    Route::put('{id}/adiciona-estoque', [ProductsController::class, 'adicionaEstoque'])->name('products.adiciona-estoque');
-    Route::put('{id}/remove-estoque', [ProductsController::class, 'removeEstoque'])->name('products.remove-estoque');
-    Route::put('{id}/balanceia-estoque', [ProductsController::class, 'balanceiaEstoque'])->name('products.balanceia-estoque');
+    Route::get('create', [ProductsController::class, 'create'])->name('products.create');
+   
+});
+
+Route::prefix('stock')->group(function() {
+    Route::get('', [StockController::class, 'index'])->name('stock.index');
+    Route::get('{id}/edit', [StockController::class, 'edit'])->name('stock.edit');
+    Route::match(['post', 'patch'], '{id}/update', [StockController::class, 'update'])->name('stock.update');
 });

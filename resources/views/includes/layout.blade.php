@@ -23,7 +23,7 @@
                     <a class="nav-link" href="/categories">Categorias</a>
                 </li>
                 <li class="nav-item me-4">
-                    <a class="nav-link" href="/">Estoques</a>
+                    <a class="nav-link" href="/stock">Estoques</a>
                 </li>
                 <li class="nav-item me-4">
                     <a class="nav-link" href="/brands">Marcas</a>

@@ -14,7 +14,6 @@ class ProductSeeder extends Seeder
             [
                 'name' => 'Produto 1',
                 'description' => 'Descrição do Produto 1',
-                'stock' => 100,
                 'price' => 99.99,
                 'photo' => 'produto1.jpg',
                 'category_id' => 1,
@@ -24,7 +23,6 @@ class ProductSeeder extends Seeder
             [
                 'name' => 'Produto 2',
                 'description' => 'Descrição do Produto 2',
-                'stock' => 50,
                 'price' => 49.99,
                 'photo' => 'produto2.jpg',
                 'category_id' => 2,
