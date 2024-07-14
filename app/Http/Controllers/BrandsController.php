@@ -30,14 +30,15 @@ class BrandsController extends Controller
     {
         $validator = Validator::make($request->all(), [
             "name" => "required",
-            'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ],[
             "name.required" => "O campo de nome deve ser preenchido",
+            "photo.required" => "O campo de foto deve ser preenchido",
             'photo.mimes' => 'O arquivo deve ser uma imagem',
             'photo.max' => 'O arquivo deve ser menor que 2MB',
             'photo.image' => 'O arquivo deve ser uma imagem',
         ]);
-
+        
         if ($validator->fails()) {
             return response()->json([
                 'message' => 'Erro na validação dos campos',
@@ -47,7 +48,7 @@ class BrandsController extends Controller
 
         $brand = new Brand();
         $brand->name = $request->name;
-    
+        
         if ($request->hasFile('photo')) {
             $photoPath = $request->file('photo')->store('brand_photos', 'public');
             $brand->photo = $photoPath;

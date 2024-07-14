@@ -18,6 +18,7 @@ class ProductSeeder extends Seeder
                 'price' => 99.99,
                 'photo' => 'produto1.jpg',
                 'category_id' => 1,
+                'brand_id' => 1,
                 'photo_mini' => 'produto1_mini.jpg',
             ],
             [
@@ -27,6 +28,7 @@ class ProductSeeder extends Seeder
                 'price' => 49.99,
                 'photo' => 'produto2.jpg',
                 'category_id' => 2,
+                'brand_id' => 2,
                 'photo_mini' => 'produto2_mini.jpg',
             ],
         ];
