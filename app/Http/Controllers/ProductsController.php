@@ -41,6 +41,10 @@ class ProductsController extends Controller
 
         $path = $request->file('photo')->store('photos', 'public');
 
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
         $product = new Product([
             'name' => $request->name,
             'description' => $request->description,
@@ -77,6 +81,10 @@ class ProductsController extends Controller
 
         $product = Product::findOrFail($id);
 
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
         if ($request->hasFile('photo')) {
             $path = $request->file('photo')->store('photos', 'public');
             $product->photo = $path;
@@ -98,6 +106,74 @@ class ProductsController extends Controller
         $product = Product::findOrFail($id);
         $product->delete();
 
+
         return redirect()->route('products.index')->with('success', 'Produto excluído com sucesso.');
+    }
+
+    public function adicionaEstoque($id, Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            "stock" => "required"
+        ],[
+            "stock.required" => "O campo de estoque deve ser preenchido"
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $product = Product::find($id);
+
+        $product->stock += $request->stock;
+
+        $product->save();
+
+        return response()->json(['product' => $product]);
+    }
+
+    public function removeEstoque($id, Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            "stock" => "required"
+        ],[
+            "stock.required" => "O campo de estoque deve ser preenchido"
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $product = Product::find($id);
+
+        if ($product->stock - $request->stock < 0) {
+            $product->stock = 0;
+        } else {
+            $product->stock -= $request->stock;
+        }
+
+        $product->save();
+
+        return response()->json(['product' => $product]);
+    }
+
+    public function balanceiaEstoque($id, Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            "stock" => "required"
+        ],[
+            "stock.required" => "O campo de estoque deve ser preenchido"
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $product = Product::find($id);
+
+        $product->stock = $request->stock;
+
+        $product->save();
+
+        return response()->json(['product' => $product]);
     }
 }
