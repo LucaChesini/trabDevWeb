@@ -95,10 +95,14 @@ class BrandsController extends Controller
     }
 
     public function destroy($id)
-    {
-        $brand = Brand::find($id);
-        $brand->delete();
+{
+    $brand = Brand::find($id);
 
-        return redirect()->route('brands.index');
+    if ($brand->products()->count() > 0) {
+        return redirect()->route('brands.index')->with('error', 'Não é possível excluir a marca porque ela está sendo referenciada por um ou mais produtos.');
     }
+    $brand->delete();
+
+    return redirect()->route('brands.index')->with('success', 'Marca deletada com sucesso.');
+}
 }

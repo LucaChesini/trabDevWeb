@@ -83,10 +83,14 @@ class CategoriesController extends Controller
     }
 
     public function destroy($id)
-    {
-        $category = Category::find($id);
-        $category->delete();
+{
+    $category = Category::find($id);
 
-        return redirect()->route('categories.index');
+    if ($category->products()->count() > 0) {
+        return redirect()->route('categories.index')->with('error', 'Não é possível excluir a categoria porque ela está sendo referenciada por um ou mais produtos.');
     }
+    $category->delete();
+
+    return redirect()->route('categories.index')->with('success', 'Categoria deletada com sucesso.');
+}
 }
