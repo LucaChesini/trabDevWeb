@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Brand;
 use App\Models\Category;
+use Illuminate\Support\Facades\Validator;
 
 class ProductsController extends Controller
 {
@@ -26,17 +27,24 @@ class ProductsController extends Controller
         ]);
     }
 
-        
-
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'required',
             'description' => 'required',
             'price' => 'required|numeric',
             'photo' => 'required|image',
             'brand_id' => 'nullable|exists:brands,id',
             'category_id' => 'nullable|exists:categories,id',
+        ], [
+            'name.required' => 'O campo de nome deve ser preenchido',
+            'description.required' => 'O campo de descrição deve ser preenchido',
+            'price.required' => 'O campo de preço deve ser preenchido',
+            'price.numeric' => 'O campo de preço deve ter um valor numerico',
+            'photo.required' => 'O campo de foto deve ser preenchido',
+            'photo.image' => 'O campo de foto deve ser uma imagem',
+            'brand_id.exists' => 'A marca selecionada não existe no sistema',
+            'category_id.exists' => 'A categoria selecionada não existe no sistema',
         ]);
 
         $path = $request->file('photo')->store('photos', 'public');
@@ -70,13 +78,22 @@ class ProductsController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'required',
             'description' => 'required',
             'price' => 'required|numeric',
             'photo' => 'nullable|image',
             'brand_id' => 'nullable|exists:brands,id',
             'category_id' => 'nullable|exists:categories,id',
+        ], [
+            'name.required' => 'O campo de nome deve ser preenchido',
+            'description.required' => 'O campo de descrição deve ser preenchido',
+            'price.required' => 'O campo de preço deve ser preenchido',
+            'price.numeric' => 'O campo de preço deve ter um valor numerico',
+            'photo.required' => 'O campo de foto deve ser preenchido',
+            'photo.image' => 'O campo de foto deve ser uma imagem',
+            'brand_id.exists' => 'A marca selecionada não existe no sistema',
+            'category_id.exists' => 'A categoria selecionada não existe no sistema',
         ]);
 
         $product = Product::findOrFail($id);
