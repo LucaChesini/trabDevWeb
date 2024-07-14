@@ -38,12 +38,9 @@ class BrandsController extends Controller
             'photo.max' => 'O arquivo deve ser menor que 2MB',
             'photo.image' => 'O arquivo deve ser uma imagem',
         ]);
-        
+
         if ($validator->fails()) {
-            return response()->json([
-                'message' => 'Erro na validação dos campos',
-                'erros' => $validator->errors()
-            ]);
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         $brand = new Brand();
@@ -80,10 +77,7 @@ class BrandsController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'message' => 'Erro na validação dos campos',
-                'erros' => $validator->errors()
-            ]);
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         $brand = Brand::find($id);

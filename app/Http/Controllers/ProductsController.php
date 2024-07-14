@@ -28,11 +28,7 @@ class ProductsController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'message' => 'Erro na validação dos campos',
-                'erros' => $validator->errors()
-            ]);
-            // return back()->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         $product = new Product([
@@ -62,11 +58,7 @@ class ProductsController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'message' => 'Erro na validação dos campos',
-                'erros' => $validator->errors()
-            ]);
-            // return back()->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         $product = Product::find($id);
@@ -101,11 +93,7 @@ class ProductsController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'message' => 'Erro na validação dos campos',
-                'erros' => $validator->errors()
-            ]);
-            // return back()->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         $product = Product::find($id);
@@ -126,11 +114,7 @@ class ProductsController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'message' => 'Erro na validação dos campos',
-                'erros' => $validator->errors()
-            ]);
-            // return back()->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         $product = Product::find($id);
@@ -155,11 +139,7 @@ class ProductsController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'message' => 'Erro na validação dos campos',
-                'erros' => $validator->errors()
-            ]);
-            // return back()->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         $product = Product::find($id);

@@ -8,6 +8,15 @@
     @else
         <h1 class="text-center mt-4">Criar Marca</h1>
     @endif
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <a href="{{ route('brands.index') }}" class="btn btn-info mb-4">Voltar</a>
     @if ($brand->id)
         <form action="{{ route('brands.update', ['id' => $brand->id]) }}" method="POST" enctype="multipart/form-data">
