@@ -46,11 +46,13 @@ Route::prefix('products')->group(function() {
     Route::put('{id}', [ProductsController::class, 'update'])->name('products.update');
     Route::delete('{id}', [ProductsController::class, 'destroy'])->name('products.destroy');
     Route::get('create', [ProductsController::class, 'create'])->name('products.create');
-   
+    Route::patch('stock/{id}', [ProductsController::class, 'ajustaEstoque'])->name('products.ajusta_estoque');
+    Route::get('{id}/edit', [ProductsController::class, 'edit'])->name('products.edit');
 });
+
 
 Route::prefix('stock')->group(function() {
     Route::get('', [StockController::class, 'index'])->name('stock.index');
     Route::get('{id}/edit', [StockController::class, 'edit'])->name('stock.edit');
-    Route::match(['post', 'patch'], '{id}/update', [StockController::class, 'update'])->name('stock.update');
+    // Route::match(['post', 'patch'], '{id}/update', [StockController::class, 'update'])->name('stock.update');
 });

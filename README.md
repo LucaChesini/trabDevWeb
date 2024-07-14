@@ -15,3 +15,7 @@ Atualize as migrations
 ```
 php artisan migrate
 ```
+Criar link do storage
+```
+php artisan storage:link
+```

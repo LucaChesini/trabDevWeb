@@ -17,7 +17,8 @@ class Product extends Model
         'photo',
         'brand_id',
         'category_id',
-        'photo_mini'
+        'photo_mini',
+        'stock'
     ];
 
     public function category()
@@ -29,5 +30,5 @@ class Product extends Model
     {
         return $this->belongsTo(Brand::class);
     }
+}
 
-    }

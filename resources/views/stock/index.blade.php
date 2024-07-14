@@ -21,7 +21,7 @@
                         <tr>
                             <td>{{ $product->id }}</td>
                             <td>{{ $product->name }}</td>
-                            <td>{{ $product->stock ? $product->stock->quantity : 0 }}</td>
+                            <td>{{ $product->stock }}</td>
                             <td>
                                 <a href="{{ route('stock.edit', $product->id) }}" class="btn btn-primary">Alterar Estoque</a>
                             </td>
