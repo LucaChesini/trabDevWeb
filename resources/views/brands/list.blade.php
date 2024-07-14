@@ -16,7 +16,7 @@
     @endif
     <h1>Marcas</h1>
     <div>
-        <a href="{{ route('brands.create') }}">Adicionar Marcas</a>
+        <a href="{{ route('brands.create') }}" class="btn btn-success mb-4">Adicionar Marcas</a>
     </div>
     <table class="table table-striped table-hover">
         <thead>

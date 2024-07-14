@@ -16,7 +16,7 @@
     @endif
     <h1>Categorias</h1>
     <div>
-        <a href="{{route('categories.create')}}" >Adicionar Categorias</a>
+        <a href="{{route('categories.create')}}" class="btn btn-success mb-4">Adicionar Categorias</a>
     </div>
     <table class="table table-striped table-hover">
         <thead>

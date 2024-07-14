@@ -21,8 +21,8 @@
     @if ($category->id)
         <form action="{{ route('categories.update', ['id' => $category->id]) }}" method="POST">
             @method('PUT')
-        @else
-            <form action="{{ route('categories.store') }}" method="POST">
+    @else
+        <form action="{{ route('categories.store') }}" method="POST">
     @endif
     @csrf
     <label for="name" class="form-label">Nome:</label>

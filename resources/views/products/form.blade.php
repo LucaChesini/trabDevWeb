@@ -5,7 +5,12 @@
 @endsection
 
 @section('content')
-@if ($errors->any())
+    @if ($product->id)
+        <h1>Editar Produto</h1>
+    @else
+        <h1>Adicionar Produto</h1>
+    @endif
+    @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
                 @foreach ($errors->all() as $error)
@@ -14,41 +19,47 @@
             </ul>
         </div>
     @endif
-    <h1>Adicionar Produto</h1>
 
     <a href="{{ route('products.index') }}" class="btn btn-info mb-4">Voltar para Lista de Produtos</a>
-
-    <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
+    @if ($product->id)
+        <form action="{{ route('products.update', ['id' => $product->id]) }}" method="POST" enctype="multipart/form-data">
+            @method('PUT')
+    @else
+        <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
+    @endif
         @csrf
 
         <div class="mb-3">
             <label for="name" class="form-label">Nome:</label>
-            <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
+            <input type="text" class="form-control" id="name" name="name" value="{{ $product->name }}">
         </div>
 
         <div class="mb-3">
             <label for="description" class="form-label">Descrição:</label>
-            <textarea class="form-control" id="description" name="description">{{ old('description') }}</textarea>
+            <textarea class="form-control" id="description" name="description">{{ $product->description }}</textarea>
         </div>
 
         <div class="mb-3">
             <label for="price" class="form-label">Preço:</label>
-            <input type="text" class="form-control" id="price" name="price" value="{{ old('price') }}">
-        </div>
-
-        <div class="mb-3">
-            <label for="stock" class="form-label">Estoque</label>
-            <input type="number" class="form-control" id="stock" name="stock" value="{{ old('stock') }}">
+            <input type="number" class="form-control" id="price" name="price" value="{{ $product->price }}">
         </div>
 
         <div class="mb-3">
             <label for="photo" class="form-label">Foto:</label>
             <input type="file" class="form-control" id="photo" name="photo">
+            @if ($product->photo)
+                <p>Imagem atual:</p>
+                <img src="{{ asset('storage/' . $product->photo) }}" alt="Foto do Produto" style="max-width: 200px; max-height: 200px;">
+            @endif
         </div>
 
         <div class="mb-3">
             <label for="photo_mini">Miniatura do Produto</label>
             <input type="file" class="form-control" id="photo_mini" name="photo_mini">
+            @if ($product->photo_mini)
+                <p>Miniatura atual:</p>
+                <img src="{{ asset('storage/' . $product->photo_mini) }}" alt="Miniatura do Produto" style="max-width: 200px; max-height: 200px;">
+            @endif
         </div>
 
         <div class="mb-3">
@@ -56,7 +67,7 @@
             <select class="form-select" id="brand_id" name="brand_id">
                 <option value="">Selecione a Marca</option>
                 @foreach ($brands as $brand)
-                    <option value="{{ $brand->id }}" {{ old('brand_id') == $brand->id ? 'selected' : '' }}>
+                    <option value="{{ $brand->id }}" {{ $product->brand_id == $brand->id ? 'selected' : '' }}>
                         {{ $brand->name }}
                     </option>
                 @endforeach
@@ -68,7 +79,7 @@
             <select class="form-select" id="category_id" name="category_id">
                 <option value="">Selecione a Categoria</option>
                 @foreach ($categories as $category)
-                    <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                    <option value="{{ $category->id }}" {{ $product->category_id == $category->id ? 'selected' : '' }}>
                         {{ $category->name }}
                     </option>
                 @endforeach

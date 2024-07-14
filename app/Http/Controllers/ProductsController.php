@@ -21,8 +21,10 @@ class ProductsController extends Controller
     {
         $brands = Brand::all();
         $categories = Category::all();
+        $product = new Product();
 
         return view('products.form', [
+            'product' => $product,
             'brands' => $brands,
             'categories' => $categories 
         ]);
@@ -34,8 +36,6 @@ class ProductsController extends Controller
             'name' => 'required',
             'description' => 'required',
             'price' => 'required|numeric',
-            'stock.required' => 'O campo de estoque deve ser preenchido',
-            'stock.integer' => 'O campo de estoque deve ser um valor numérico positivo',
             'photo' => 'required|image',
             'brand_id' => 'nullable|exists:brands,id',
             'category_id' => 'nullable|exists:categories,id',
@@ -44,7 +44,6 @@ class ProductsController extends Controller
             'description.required' => 'O campo de descrição deve ser preenchido',
             'price.required' => 'O campo de preço deve ser preenchido',
             'price.numeric' => 'O campo de preço deve ter um valor numerico',
-            'stock.integer' => 'O campo de estoque deve ser um valor numérico positivo',
             'photo.image' => 'O campo de foto deve ser uma imagem válida',
             'photo.required' => 'O campo de foto deve ser preenchido',
             'photo.image' => 'O campo de foto deve ser uma imagem',
@@ -81,7 +80,7 @@ class ProductsController extends Controller
         $product = Product::findOrFail($id);
         $brands = Brand::all();
         $categories = Category::all();
-        return view('products.edit', compact('product', 'brands', 'categories'));
+        return view('products.form', compact('product', 'brands', 'categories'));
     }
     
 
