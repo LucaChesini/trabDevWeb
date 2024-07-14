@@ -5,7 +5,7 @@
 @section('content')
     <h1>Lista de Produtos</h1>
     <a href="{{ route('products.create') }}" >Adicionar Produto</a>
-    <table class="table">
+    <table class="table table-striped table-hover">
         <thead>
             <tr>
                 <th>ID</th>

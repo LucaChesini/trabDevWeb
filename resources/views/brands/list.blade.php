@@ -8,13 +8,18 @@
         <a href="{{ route('brands.create') }}">Adicionar Marcas</a>
     </div>
     <table class="table table-striped table-hover">
-        <tr>
-            <th>Nome</th>
-            <th>Foto</th>
-            <th>Ações</th>
-        </tr>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Foto</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
         @foreach ($brands as $brand)
             <tr>
+                <td>{{ $brand->id }}</td>
                 <td>{{ $brand->name }}</td>
                 <td>
                     @if ($brand->photo)
@@ -36,5 +41,6 @@
                 </td>
             </tr>
         @endforeach
+        </tbody>
     </table>
 @endsection
