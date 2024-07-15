@@ -124,7 +124,7 @@ class ProductsController extends Controller
         }
     
         if ($request->hasFile('photo_mini')) {
-            $photoMiniPath = $request->file('photo_mini')->store('photos_mini', 'public');
+            $photoMiniPath = $request->file('photo_mini')->store('photos-mini', 'public');
             $product->photo_mini = $photoMiniPath;
         }
 

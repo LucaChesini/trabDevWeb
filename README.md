@@ -19,3 +19,7 @@ Criar link do storage
 ```
 php artisan storage:link
 ```
+Iniciar servidor de testes
+```
+php artisan serve
+```
